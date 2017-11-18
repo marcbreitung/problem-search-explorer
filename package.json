@@ -1,8 +1,13 @@
 {
   "name": "problem-search-explorer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Problem Search Explorer",
   "author": "Marc Breitung",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marcbreitung/problem-search-explorer"
+  },
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
@@ -14,6 +19,7 @@
   "dependencies": {
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
+    "problem-graph-visualisation": "github:marcbreitung/problem-graph-visualisation",
     "problem-map-generator": "github:marcbreitung/problem-map-generator",
     "problem-search": "github:marcbreitung/problem-search"
   },
