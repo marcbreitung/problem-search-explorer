@@ -23,7 +23,9 @@
                 console.log(value.searchStrategy)
             },
             updateMap: function (value) {
-                let map = new ProblemMapGenerator.Map({'cols': parseInt(value.cols, 10), 'rows': parseInt(value.rows, 10), 'width': 10, 'height': 10})
+                let mapElement = document.getElementById('map')
+                console.log('mapElement', mapElement)
+                let map = new ProblemMapGenerator.Map({'cols': parseInt(value.cols, 10), 'rows': parseInt(value.rows, 10), 'width': mapElement.offsetWidth, 'height': mapElement.offsetHeight})
                 map.injectRandom(ProblemMapGenerator.Random)
                 this.nodes = map.getNodes()
             }

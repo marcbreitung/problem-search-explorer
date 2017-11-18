@@ -16,7 +16,8 @@ module.exports = {
         'html'
     ],
     globals: {
-        'ProblemMapGenerator': true
+        'ProblemMapGenerator': true,
+        'ProblemGraphVisualisation': true
     },
     // add your custom rules here
     'rules': {
