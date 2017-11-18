@@ -1,5 +1,7 @@
 # Problem Search Explorer
 
+A Vue application: generates a randomized map to explore different search strategies.
+
 (currently in development)
 
-A Vue application: generates a randomized map to explore different search strategies.
+![Problem Search Explorer](problem-search-explorer.png)
