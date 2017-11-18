@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="menu__section section">
-            <a href="" class="link"><i class="fa fa-github fa-fw" aria-hidden="true"></i>Problem Search Explorer</a>
+            <a href="https://github.com/marcbreitung/problem-search-explorer" class="link" target="_blank"><i class="fa fa-github fa-fw" aria-hidden="true"></i>Problem Search Explorer</a>
         </div>
     </div>
 </template>
