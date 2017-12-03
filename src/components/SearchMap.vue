@@ -11,7 +11,6 @@
     }
     export default {
         name: 'SearchMap',
-        props: ['nodes'],
         data: function () {
             return data
         },
@@ -21,14 +20,16 @@
                 this.canvas = new ProblemGraphVisualisation.Canvas({
                     'element': document.getElementById('search-map'),
                     'height': map.offsetHeight,
-                    'width': map.offsetWidth
+                    'width': map.offsetWidth,
+                    'background': '#223143'
                 })
+                this.$eventHub.$on('nodes', this.updateMap)
             })
         },
-        watch: {
-            nodes: function (val) {
+        methods: {
+            updateMap: function (nodes) {
                 let baseLevel = new ProblemGraphVisualisation.Level('baseLevel', {
-                    'nodes': val,
+                    'nodes': nodes,
                     'nodeColor': '#6189A5',
                     'lineColor': '#6189A5',
                     'textColor': '#e34f00'

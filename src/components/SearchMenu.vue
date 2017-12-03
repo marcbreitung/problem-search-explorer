@@ -15,11 +15,11 @@
             <h2 class="section__header">Map</h2>
             <div class="form__row">
                 <label class="form__label form__label--small">Columns</label>
-                <input type="number" class="form__input form__input--small" v-model="cols" placeholder="Columns (e.g. 10)">
+                <input type="number" class="form__input form__input--small" v-model="cols" placeholder="Columns (e.g. 10)" step="1" min="1" max="50">
             </div>
             <div class="form__row">
                 <label class="form__label form__label--small">Rows</label>
-                <input type="number" class="form__input form__input--small" v-model="rows" placeholder="Rows (e.g. 10)">
+                <input type="number" class="form__input form__input--small" v-model="rows" placeholder="Rows (e.g. 10)" step="1" min="1" max="50">
             </div>
             <div class="form__row">
                 <button class="form__input form__button" v-on:click="onChangeMap">Build Map</button>
