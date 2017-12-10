@@ -36,21 +36,10 @@
             },
             initEvents: function () {
                 this.$eventHub.$on('nodes', this.addBaseLevel)
-                this.$eventHub.$on('start', this.addStartLevel)
-                this.$eventHub.$on('goal', this.addGoalLevel)
             },
             addBaseLevel: function (nodes) {
                 let baseLevel = new ProblemGraphVisualisation.Level('baseLevel', {
-                    'nodes': nodes,
-                    'nodeColor': '#6189A5',
-                    'lineColor': '#6189A5',
-                    'textColor': '#e34f00'
-                })
-                this.visualisation.addLevel(baseLevel)
-                this.visualisation.update()
-            },
-            addStartLevel: function (nodes) {
-                let baseLevel = new ProblemGraphVisualisation.Level('baseLevel', {
+                    'type': 'node',
                     'nodes': nodes,
                     'nodeColor': '#6189A5',
                     'lineColor': '#6189A5',
