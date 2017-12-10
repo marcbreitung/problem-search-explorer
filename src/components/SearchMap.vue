@@ -1,13 +1,15 @@
 <template>
     <div id="map" class="map">
-        <canvas id="search-map"></canvas>
+        <canvas id="canvas"></canvas>
     </div>
 </template>
 
 <script>
     let ProblemGraphVisualisation = require('./../../node_modules/problem-graph-visualisation/dist/problem-graph-visualisation.node.min')
     let data = {
-        canvas: null
+        map: null,
+        canvas: null,
+        visualisation: null
     }
     export default {
         name: 'SearchMap',
@@ -15,27 +17,47 @@
             return data
         },
         created: function () {
-            this.$nextTick(function () {
-                let map = document.getElementById('map')
-                this.canvas = new ProblemGraphVisualisation.Canvas({
-                    'element': document.getElementById('search-map'),
-                    'height': map.offsetHeight,
-                    'width': map.offsetWidth,
-                    'background': '#223143'
-                })
-                this.$eventHub.$on('nodes', this.updateMap)
-            })
+            this.$nextTick(this.initEvents)
+            this.$nextTick(this.init)
         },
         methods: {
-            updateMap: function (nodes) {
+            init: function () {
+                this.map = document.getElementById('map')
+                this.canvas = document.getElementById('canvas')
+                this.canvas.addEventListener('click', (e) => {
+                    this.$eventHub.$emit('click-canvas', {'x': e.offsetX, 'y': e.offsetY})
+                }, false)
+                this.visualisation = new ProblemGraphVisualisation.Canvas({
+                    'element': this.canvas,
+                    'height': this.map.offsetHeight,
+                    'width': this.map.offsetWidth,
+                    'background': '#223143'
+                })
+            },
+            initEvents: function () {
+                this.$eventHub.$on('nodes', this.addBaseLevel)
+                this.$eventHub.$on('start', this.addStartLevel)
+                this.$eventHub.$on('goal', this.addGoalLevel)
+            },
+            addBaseLevel: function (nodes) {
                 let baseLevel = new ProblemGraphVisualisation.Level('baseLevel', {
                     'nodes': nodes,
                     'nodeColor': '#6189A5',
                     'lineColor': '#6189A5',
                     'textColor': '#e34f00'
                 })
-                this.canvas.addLevel(baseLevel)
-                this.canvas.update()
+                this.visualisation.addLevel(baseLevel)
+                this.visualisation.update()
+            },
+            addStartLevel: function (nodes) {
+                let baseLevel = new ProblemGraphVisualisation.Level('baseLevel', {
+                    'nodes': nodes,
+                    'nodeColor': '#6189A5',
+                    'lineColor': '#6189A5',
+                    'textColor': '#e34f00'
+                })
+                this.visualisation.addLevel(baseLevel)
+                this.visualisation.update()
             }
         }
     }
