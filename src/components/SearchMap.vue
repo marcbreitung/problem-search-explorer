@@ -42,6 +42,9 @@
                 this.$eventHub.$on('goal', this.addGoal)
             },
             addBaseLevel: function (nodes) {
+                this.visualisation.removeLevelByName('startLevel')
+                this.visualisation.removeLevelByName('goalLevel')
+                this.visualisation.removeLevelByName('baseLevel')
                 let baseLevel = new ProblemGraphVisualisation.Level('baseLevel', {
                     'type': 'node',
                     'nodes': nodes,
