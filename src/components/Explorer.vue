@@ -41,15 +41,19 @@
                     'height': mapElement.offsetHeight
                 })
                 this.map.injectRandom(ProblemMapGenerator.Random)
+                this.start = null
+                this.goal = null
                 this.$eventHub.$emit('nodes', this.map.getNodes())
             },
             addNode: function (node) {
                 if (this.start === null && this.goal === null) {
                     this.start = node
+                    this.$eventHub.$emit('start', this.start)
                     return false
                 }
                 if (this.start !== null && this.goal === null) {
                     this.goal = node
+                    this.$eventHub.$emit('goal', this.goal)
                     return true
                 }
             },
@@ -57,7 +61,6 @@
                 let node = this.map.findNodeByPosition(position)
                 if (node) {
                     this.addNode(node)
-                    console.log(node)
                 }
             }
         }
