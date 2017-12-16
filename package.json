@@ -1,6 +1,6 @@
 {
   "name": "problem-search-explorer",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Problem Search Explorer",
   "author": "Marc Breitung",
   "license": "MIT",
@@ -21,6 +21,7 @@
     "problem-map-generator": "github:marcbreitung/problem-map-generator",
     "problem-search": "github:marcbreitung/problem-search",
     "vue": "^2.5.11",
+    "vue-js-modal": "^1.3.6",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

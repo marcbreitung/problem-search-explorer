@@ -2,6 +2,11 @@
     <div id="explorer" class="explorer">
         <search-menu v-on:updateSearch="updateSearch" v-on:updateMap="updateMap"></search-menu>
         <search-map></search-map>
+        <modal name="select" height="auto">
+            <div class="modal">
+                Please select a start and a goal node.
+            </div>
+        </modal>
     </div>
 </template>
 
@@ -10,11 +15,12 @@
     import SearchMap from './SearchMap.vue'
 
     let ProblemMapGenerator = require('./../../node_modules/problem-map-generator/dist/problem-map-generator.node.min')
+    let ProblemSearch = require('./../../node_modules/problem-search/dist/problem-search.node.min')
     let data = {
         start: null,
         goal: null,
         map: null,
-        problemBuilder: null
+        problem: null
     }
     export default {
         components: {SearchMap, SearchMenu},
@@ -30,7 +36,11 @@
                 this.$eventHub.$on('click-canvas', this.findNode)
             },
             updateSearch: function (value) {
-                console.log(value.searchStrategy)
+                if (this.start === null || this.goal === null) {
+                    this.$modal.show('select')
+                    return false
+                }
+                this.problem = new ProblemSearch.Problem(this.map.getNodes(), this.start, this.goal)
             },
             updateMap: function (value) {
                 let mapElement = document.getElementById('map')
@@ -73,5 +83,10 @@
         align-items: stretch;
         width: 100vw;
         height: 100vh;
+    }
+
+    .modal {
+        background: #6189A5;
+        padding: 20px;
     }
 </style>

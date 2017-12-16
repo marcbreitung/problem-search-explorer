@@ -4,12 +4,17 @@
         <div class="menu__section section">
             <h2 class="section__header">Search</h2>
             <label class="form__label">Search Strategy</label>
-            <select v-model="searchStrategy" class="form__input menu__select" @change="onChangeSearch()">
+            <div class="form__row">
+            <select v-model="searchStrategy" class="form__input menu__select">
                 <option value="BreadthFirstSearch">Breadth First Search</option>
                 <option value="UniformCostSearch">Uniform Cost Search</option>
                 <option value="DepthFirstSearch">Depth First Search</option>
                 <option value="DepthLimitedFirstSearch">Depth Limited First Search</option>
             </select>
+            </div>
+            <div class="form__row">
+                <button class="form__input form__button" v-on:click="doSearch">Search</button>
+            </div>
         </div>
         <div class="menu__section section">
             <h2 class="section__header">Map</h2>
@@ -43,7 +48,7 @@
             return data
         },
         methods: {
-            onChangeSearch: function () {
+            doSearch: function () {
                 this.$emit('updateSearch', data)
             },
             onChangeMap: function () {
