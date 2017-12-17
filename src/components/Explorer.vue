@@ -42,7 +42,7 @@
                 this.$eventHub.$on('click-canvas', this.findNode)
             },
             updateSearch: function (value) {
-                let graph, problem, result
+                let graph, problem, result, solution
                 if (this.start === null || this.goal === null) {
                     this.$modal.show('select')
                     return false
@@ -52,7 +52,8 @@
                 graph.addNodes(this.map.getNodes())
                 problem = new ProblemSearch.Problem(graph, this.start, this.goal)
                 result = this.searchStrategy.search(problem)
-                console.log(result.solution())
+                solution = result.solution().map((node) => problem.findGraphNodeByState(node.state))
+                this.$eventHub.$emit('solution', solution)
             },
             updateMap: function (value) {
                 let mapElement = document.getElementById('map')

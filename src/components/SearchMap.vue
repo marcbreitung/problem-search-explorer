@@ -35,16 +35,19 @@
                 })
                 this.visualisation.rendererFabric.registerRenderer('node', ProblemGraphVisualisation.NodesRenderer)
                 this.visualisation.rendererFabric.registerRenderer('text', ProblemGraphVisualisation.TextRenderer)
+                this.visualisation.rendererFabric.registerRenderer('solution', ProblemGraphVisualisation.SolutionRenderer)
             },
             initEvents: function () {
-                this.$eventHub.$on('nodes', this.addBaseLevel)
+                this.$eventHub.$on('nodes', this.addNodes)
                 this.$eventHub.$on('start', this.addStart)
                 this.$eventHub.$on('goal', this.addGoal)
+                this.$eventHub.$on('solution', this.addSolution)
             },
-            addBaseLevel: function (nodes) {
+            addNodes: function (nodes) {
                 this.visualisation.removeLevelByName('startLevel')
                 this.visualisation.removeLevelByName('goalLevel')
                 this.visualisation.removeLevelByName('baseLevel')
+                this.visualisation.removeLevelByName('solutionLevel')
                 let baseLevel = new ProblemGraphVisualisation.Level('baseLevel', {
                     'type': 'node',
                     'nodes': nodes,
@@ -82,6 +85,18 @@
                     'textSize': 12
                 })
                 this.visualisation.addLevel(goalLevel)
+                this.visualisation.update()
+            },
+            addSolution: function (nodes) {
+                let solutionLevel = new ProblemGraphVisualisation.Level('solutionLevel', {
+                    'type': 'solution',
+                    'nodes': nodes,
+                    'nodeColor': '#e7e7e7',
+                    'lineColor': '#e7e7e7',
+                    'textColor': '#e7e7e7',
+                    'lineSize': 2
+                })
+                this.visualisation.addLevel(solutionLevel)
                 this.visualisation.update()
             }
         }
