@@ -20,7 +20,8 @@
         start: null,
         goal: null,
         map: null,
-        problem: null
+        searchStrategyFabric: null,
+        searchStrategy: null
     }
     export default {
         components: {SearchMap, SearchMenu},
@@ -33,14 +34,25 @@
         },
         methods: {
             init: function () {
+                this.searchStrategyFabric = new ProblemSearch.StrategyFabric()
+                this.searchStrategyFabric.registerStrategy('BreadthFirstSearch', ProblemSearch.BreadthFirstSearch)
+                this.searchStrategyFabric.registerStrategy('UniformCostSearch', ProblemSearch.UniformCostSearch)
+                this.searchStrategyFabric.registerStrategy('DepthFirstSearch', ProblemSearch.DepthFirstSearch)
+                this.searchStrategyFabric.registerStrategy('DepthLimitedFirstSearch', ProblemSearch.DepthLimitedFirstSearch)
                 this.$eventHub.$on('click-canvas', this.findNode)
             },
             updateSearch: function (value) {
+                let graph, problem, result
                 if (this.start === null || this.goal === null) {
                     this.$modal.show('select')
                     return false
                 }
-                this.problem = new ProblemSearch.Problem(this.map.getNodes(), this.start, this.goal)
+                this.searchStrategy = this.searchStrategyFabric.getStrategy(value.searchStrategy)
+                graph = new ProblemSearch.Graph()
+                graph.addNodes(this.map.getNodes())
+                problem = new ProblemSearch.Problem(graph, this.start, this.goal)
+                result = this.searchStrategy.search(problem)
+                console.log(result.solution())
             },
             updateMap: function (value) {
                 let mapElement = document.getElementById('map')
