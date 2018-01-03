@@ -50,6 +50,7 @@
                 this.visualisation.removeLevelByName('solutionLevel')
                 let baseLevel = new ProblemGraphVisualisation.Level('baseLevel', {
                     'type': 'node',
+                    'sorting': 0,
                     'nodes': nodes,
                     'nodeColor': '#6189A5',
                     'lineColor': '#6189A5',
@@ -60,9 +61,11 @@
                 this.visualisation.update()
             },
             addStart: function (node) {
+                this.resetSolution()
                 node.label = 'A'
                 let startLevel = new ProblemGraphVisualisation.Level('startLevel', {
                     'type': 'text',
+                    'sorting': 3,
                     'nodes': [node],
                     'nodeColor': '#507b0f',
                     'lineColor': '#000000',
@@ -77,6 +80,7 @@
                 node.label = 'B'
                 let goalLevel = new ProblemGraphVisualisation.Level('goalLevel', {
                     'type': 'text',
+                    'sorting': 4,
                     'nodes': [node],
                     'nodeColor': '#e34f00',
                     'lineColor': '#000000',
@@ -90,6 +94,7 @@
             addSolution: function (nodes) {
                 let solutionLevel = new ProblemGraphVisualisation.Level('solutionLevel', {
                     'type': 'solution',
+                    'sorting': 2,
                     'nodes': nodes,
                     'nodeColor': '#e7e7e7',
                     'lineColor': '#e7e7e7',
@@ -97,6 +102,12 @@
                     'lineSize': 2
                 })
                 this.visualisation.addLevel(solutionLevel)
+                this.visualisation.update()
+            },
+            resetSolution: function () {
+                this.visualisation.removeLevelByName('startLevel')
+                this.visualisation.removeLevelByName('goalLevel')
+                this.visualisation.removeLevelByName('solutionLevel')
                 this.visualisation.update()
             }
         }

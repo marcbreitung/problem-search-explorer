@@ -42,7 +42,7 @@
                 this.searchStrategyFabric.registerStrategy('DepthFirstSearch', ProblemSearch.DepthFirstSearch)
                 this.searchStrategyFabric.registerStrategy('DepthLimitedFirstSearch', ProblemSearch.DepthLimitedFirstSearch)
                 this.$eventHub.$on('click-canvas', this.findNode)
-                this.map = new ProblemMapGenerator.Map({});
+                this.map = new ProblemMapGenerator.Map({})
             },
             updateSearch: function (value) {
                 let graph, problem, result, solution
@@ -81,9 +81,15 @@
                     this.$eventHub.$emit('goal', this.goal)
                     return true
                 }
+                if (this.start !== null && this.goal !== null) {
+                    this.goal = null
+                    this.start = node
+                    this.$eventHub.$emit('start', this.start)
+                    return true
+                }
             },
             findNode: function (position) {
-                let node = this.map.findNodeByPosition(position)
+                let node = this.map.findNodeByPosition(position, 10)
                 if (node) {
                     this.addNode(node)
                 }
