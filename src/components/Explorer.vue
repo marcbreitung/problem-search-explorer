@@ -20,6 +20,7 @@
         start: null,
         goal: null,
         map: null,
+        mapElement: null,
         searchStrategyFabric: null,
         searchStrategy: null
     }
@@ -34,12 +35,14 @@
         },
         methods: {
             init: function () {
+                this.mapElement = document.getElementById('map')
                 this.searchStrategyFabric = new ProblemSearch.StrategyFabric()
                 this.searchStrategyFabric.registerStrategy('BreadthFirstSearch', ProblemSearch.BreadthFirstSearch)
                 this.searchStrategyFabric.registerStrategy('UniformCostSearch', ProblemSearch.UniformCostSearch)
                 this.searchStrategyFabric.registerStrategy('DepthFirstSearch', ProblemSearch.DepthFirstSearch)
                 this.searchStrategyFabric.registerStrategy('DepthLimitedFirstSearch', ProblemSearch.DepthLimitedFirstSearch)
                 this.$eventHub.$on('click-canvas', this.findNode)
+                this.map = new ProblemMapGenerator.Map({});
             },
             updateSearch: function (value) {
                 let graph, problem, result, solution
@@ -56,12 +59,11 @@
                 this.$eventHub.$emit('solution', solution)
             },
             updateMap: function (value) {
-                let mapElement = document.getElementById('map')
-                this.map = new ProblemMapGenerator.Map({
+                this.map.setSettings({
                     'cols': parseInt(value.cols, 10),
                     'rows': parseInt(value.rows, 10),
-                    'width': mapElement.offsetWidth,
-                    'height': mapElement.offsetHeight
+                    'width': this.mapElement.offsetWidth,
+                    'height': this.mapElement.offsetHeight
                 })
                 this.map.injectRandom(ProblemMapGenerator.Random)
                 this.start = null
