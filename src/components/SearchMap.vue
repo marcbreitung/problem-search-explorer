@@ -33,9 +33,9 @@
                     'width': this.map.offsetWidth,
                     'background': '#223143'
                 })
-                this.visualisation.rendererFabric.registerRenderer('node', ProblemGraphVisualisation.NodesRenderer)
-                this.visualisation.rendererFabric.registerRenderer('text', ProblemGraphVisualisation.TextRenderer)
-                this.visualisation.rendererFabric.registerRenderer('solution', ProblemGraphVisualisation.SolutionRenderer)
+                this.visualisation.rendererFactory.registerRenderer('node', ProblemGraphVisualisation.NodesRenderer)
+                this.visualisation.rendererFactory.registerRenderer('text', ProblemGraphVisualisation.TextRenderer)
+                this.visualisation.rendererFactory.registerRenderer('solution', ProblemGraphVisualisation.SolutionRenderer)
             },
             initEvents: function () {
                 this.$eventHub.$on('nodes', this.addNodes)
@@ -44,11 +44,11 @@
                 this.$eventHub.$on('solution', this.addSolution)
             },
             addNodes: function (nodes) {
-                this.visualisation.removeLevelByName('startLevel')
-                this.visualisation.removeLevelByName('goalLevel')
-                this.visualisation.removeLevelByName('baseLevel')
-                this.visualisation.removeLevelByName('solutionLevel')
-                let baseLevel = new ProblemGraphVisualisation.Level('baseLevel', {
+                this.visualisation.removeLayerByName('startLayer')
+                this.visualisation.removeLayerByName('goalLayer')
+                this.visualisation.removeLayerByName('baseLayer')
+                this.visualisation.removeLayerByName('solutionLayer')
+                let baseLayer = new ProblemGraphVisualisation.Layer('baseLayer', {
                     'type': 'node',
                     'sorting': 0,
                     'nodes': nodes,
@@ -57,13 +57,13 @@
                     'textColor': '#e34f00',
                     'nodeSize': 5
                 })
-                this.visualisation.addLevel(baseLevel)
+                this.visualisation.addLayer(baseLayer)
                 this.visualisation.update()
             },
             addStart: function (node) {
                 this.resetSolution()
                 node.label = 'A'
-                let startLevel = new ProblemGraphVisualisation.Level('startLevel', {
+                let startLayer = new ProblemGraphVisualisation.Layer('startLayer', {
                     'type': 'text',
                     'sorting': 3,
                     'nodes': [node],
@@ -73,12 +73,12 @@
                     'nodeSize': 12,
                     'textSize': 12
                 })
-                this.visualisation.addLevel(startLevel)
+                this.visualisation.addLayer(startLayer)
                 this.visualisation.update()
             },
             addGoal: function (node) {
                 node.label = 'B'
-                let goalLevel = new ProblemGraphVisualisation.Level('goalLevel', {
+                let goalLayer = new ProblemGraphVisualisation.Layer('goalLayer', {
                     'type': 'text',
                     'sorting': 4,
                     'nodes': [node],
@@ -88,11 +88,11 @@
                     'nodeSize': 12,
                     'textSize': 12
                 })
-                this.visualisation.addLevel(goalLevel)
+                this.visualisation.addLayer(goalLayer)
                 this.visualisation.update()
             },
             addSolution: function (nodes) {
-                let solutionLevel = new ProblemGraphVisualisation.Level('solutionLevel', {
+                let solutionLayer = new ProblemGraphVisualisation.Layer('solutionLayer', {
                     'type': 'solution',
                     'sorting': 2,
                     'nodes': nodes,
@@ -101,13 +101,13 @@
                     'textColor': '#e7e7e7',
                     'lineSize': 2
                 })
-                this.visualisation.addLevel(solutionLevel)
+                this.visualisation.addLayer(solutionLayer)
                 this.visualisation.update()
             },
             resetSolution: function () {
-                this.visualisation.removeLevelByName('startLevel')
-                this.visualisation.removeLevelByName('goalLevel')
-                this.visualisation.removeLevelByName('solutionLevel')
+                this.visualisation.removeLayerByName('startLayer')
+                this.visualisation.removeLayerByName('goalLayer')
+                this.visualisation.removeLayerByName('solutionLayer')
                 this.visualisation.update()
             }
         }

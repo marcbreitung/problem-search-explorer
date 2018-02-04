@@ -36,27 +36,26 @@
         methods: {
             init: function () {
                 this.mapElement = document.getElementById('map')
-                this.searchStrategyFabric = new ProblemSearch.StrategyFabric()
-                this.searchStrategyFabric.registerStrategy('BreadthFirstSearch', ProblemSearch.BreadthFirstSearch)
-                this.searchStrategyFabric.registerStrategy('UniformCostSearch', ProblemSearch.UniformCostSearch)
-                this.searchStrategyFabric.registerStrategy('DepthFirstSearch', ProblemSearch.DepthFirstSearch)
-                this.searchStrategyFabric.registerStrategy('DepthLimitedFirstSearch', ProblemSearch.DepthLimitedFirstSearch)
+                this.searchStrategyFactory = new ProblemSearch.StrategyFactory()
+                this.searchStrategyFactory.registerStrategy('BreadthFirstSearch', ProblemSearch.BreadthFirstSearch)
+                this.searchStrategyFactory.registerStrategy('UniformCostSearch', ProblemSearch.UniformCostSearch)
+                this.searchStrategyFactory.registerStrategy('DepthFirstSearch', ProblemSearch.DepthFirstSearch)
+                this.searchStrategyFactory.registerStrategy('DepthLimitedFirstSearch', ProblemSearch.DepthLimitedFirstSearch)
                 this.$eventHub.$on('click-canvas', this.findNode)
                 this.map = new ProblemMapGenerator.Map({})
             },
             updateSearch: function (value) {
-                let graph, problem, result, solution
+                let graph, problem, result
                 if (this.start === null || this.goal === null) {
                     this.$modal.show('select')
                     return false
                 }
-                this.searchStrategy = this.searchStrategyFabric.getStrategy(value.searchStrategy)
+                this.searchStrategy = this.searchStrategyFactory.getStrategy(value.searchStrategy)
                 graph = new ProblemSearch.Graph()
                 graph.addNodes(this.map.getNodes())
                 problem = new ProblemSearch.Problem(graph, this.start, this.goal)
                 result = this.searchStrategy.search(problem)
-                solution = result.solution().map((node) => problem.findGraphNodeByState(node.state))
-                this.$eventHub.$emit('solution', solution)
+                this.$eventHub.$emit('solution', result.solutionGraph())
             },
             updateMap: function (value) {
                 this.map.setSettings({
