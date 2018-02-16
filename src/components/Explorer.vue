@@ -125,10 +125,18 @@
         align-items: stretch;
         width: 100vw;
         height: 100vh;
+        flex-direction: column-reverse;
     }
 
     .modal {
         background: #6189A5;
         padding: 20px;
     }
+    
+    @media (min-width: 769px) {
+        .explorer {
+            flex-direction: row;
+        }
+    }
+    
 </style>

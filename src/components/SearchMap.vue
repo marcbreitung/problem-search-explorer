@@ -44,6 +44,7 @@
                 this.$eventHub.$on('solution', this.addSolution)
             },
             addNodes: function (nodes) {
+                this.visualisation.resize({'height': this.map.offsetHeight, 'width': this.map.offsetWidth})
                 this.visualisation.removeLayerByName('startLayer')
                 this.visualisation.removeLayerByName('goalLayer')
                 this.visualisation.removeLayerByName('baseLayer')
@@ -117,5 +118,6 @@
 <style scoped>
     .map {
         flex-grow: 1;
+        overflow: hidden;
     }
 </style>
