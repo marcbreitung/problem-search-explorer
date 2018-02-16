@@ -7,6 +7,11 @@
                 Please select a start and a goal node.
             </div>
         </modal>
+        <modal name="solution" height="auto">
+            <div class="modal">
+                No solution found.
+            </div>
+        </modal>
     </div>
 </template>
 
@@ -40,7 +45,7 @@
                 this.searchStrategyFactory.registerStrategy('BreadthFirstSearch', ProblemSearch.BreadthFirstSearch)
                 this.searchStrategyFactory.registerStrategy('UniformCostSearch', ProblemSearch.UniformCostSearch)
                 this.searchStrategyFactory.registerStrategy('DepthFirstSearch', ProblemSearch.DepthFirstSearch)
-                this.searchStrategyFactory.registerStrategy('DepthLimitedFirstSearch', ProblemSearch.DepthLimitedFirstSearch)
+                this.searchStrategyFactory.registerStrategy('DepthLimitedSearch', ProblemSearch.DepthLimitedSearch)
                 this.$eventHub.$on('click-canvas', this.findNode)
                 this.map = new ProblemMapGenerator.Map({})
             },
@@ -54,8 +59,14 @@
                 graph = new ProblemSearch.Graph()
                 graph.addNodes(this.map.getNodes())
                 problem = new ProblemSearch.Problem(graph, this.start, this.goal)
-                result = this.searchStrategy.search(problem)
-                this.$eventHub.$emit('solution', result.solutionGraph())
+                try {
+                    result = this.searchStrategy.search(problem)
+                    this.$eventHub.$emit('solution', result.solutionGraph())
+                } catch (e) {
+                    if (e.name === 'NoSolutionException') {
+                        this.$modal.show('solution')
+                    }
+                }
             },
             updateMap: function (value) {
                 this.map.setSettings({

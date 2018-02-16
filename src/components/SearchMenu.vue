@@ -9,7 +9,7 @@
                 <option value="BreadthFirstSearch">Breadth First Search</option>
                 <option value="UniformCostSearch">Uniform Cost Search</option>
                 <option value="DepthFirstSearch">Depth First Search</option>
-                <option value="DepthLimitedFirstSearch">Depth Limited First Search</option>
+                <option value="DepthLimitedSearch">Depth Limited Search</option>
             </select>
             </div>
             <div class="form__row">
