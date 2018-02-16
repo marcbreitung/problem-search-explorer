@@ -12,6 +12,11 @@
                 No solution found.
             </div>
         </modal>
+        <modal name="map" height="auto">
+            <div class="modal">
+                You must generate a map. Please click the "Build Map" button.
+            </div>
+        </modal>
     </div>
 </template>
 
@@ -27,7 +32,8 @@
         map: null,
         mapElement: null,
         searchStrategyFabric: null,
-        searchStrategy: null
+        searchStrategy: null,
+        mapHasNodes: false
     }
     export default {
         components: {SearchMap, SearchMenu},
@@ -51,6 +57,10 @@
             },
             updateSearch: function (value) {
                 let graph, problem, result
+                if (this.mapHasNodes === false) {
+                    this.$modal.show('map')
+                    return false
+                }
                 if (this.start === null || this.goal === null) {
                     this.$modal.show('select')
                     return false
@@ -78,6 +88,7 @@
                 this.map.injectRandom(ProblemMapGenerator.Random)
                 this.start = null
                 this.goal = null
+                this.mapHasNodes = true
                 this.$eventHub.$emit('nodes', this.map.getNodes())
             },
             addNode: function (node) {
