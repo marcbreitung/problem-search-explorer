@@ -5,16 +5,18 @@
             <h2 class="section__header">Search</h2>
             <label class="form__label">Search Strategy</label>
             <div class="form__row">
-                <select v-model="searchStrategy" @change="onChangeStrategy()" class="form__input menu__select">
-                    <option value="BreadthFirstSearch">Breadth First Search</option>
-                    <option value="UniformCostSearch">Uniform Cost Search</option>
-                    <option value="DepthFirstSearch">Depth First Search</option>
-                    <option value="DepthLimitedSearch">Depth Limited Search</option>
-                </select>
+                <div class="select__icon">
+                    <select v-model="searchStrategy" @change="onChangeStrategy()" class="form__input menu__select">
+                        <option value="BreadthFirstSearch">Breadth First Search</option>
+                        <option value="UniformCostSearch">Uniform Cost Search</option>
+                        <option value="DepthFirstSearch">Depth First Search</option>
+                        <option value="DepthLimitedSearch">Depth Limited Search</option>
+                    </select>
+                </div>
             </div>
             <div class="form__row" v-if="isLimit">
                 <label class="form__label form__label--small">Depth Limit</label>
-                <input type="number" class="form__input form__input--small" v-model="strategyOptions.depthLimit" placeholder="Depth Limit"
+                <input type="number" class="form__input form__input--small" v-model="strategyOptions.limit" placeholder="Depth Limit"
                        step="1" min="1">
             </div>
             <div class="form__row">
@@ -50,7 +52,7 @@
         cols: '10',
         rows: '10',
         strategyOptions: {
-            depthLimit: '10'
+            limit: '10'
         },
         isLimit: false
     }
@@ -105,6 +107,7 @@
 
     .form__row {
         margin-bottom: .5em;
+        position: relative;
     }
 
     .form__row:after {
@@ -158,5 +161,22 @@
         color: #283144;
         font-size: 0.8em;
         text-decoration: none;
+    }
+
+    .select__icon::after {
+        font-family: FontAwesome;
+        font-style: normal;
+        font-weight: normal;
+        content: '\F0D7';
+        display: block;
+        width: 1.9em;
+        height: 1.9em;
+        position: absolute;
+        top: 0;
+        right: 0;
+        pointer-events: none;
+        color: #fff;
+        text-align: center;
+        line-height: 1.9em;
     }
 </style>
