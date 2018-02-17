@@ -5,12 +5,17 @@
             <h2 class="section__header">Search</h2>
             <label class="form__label">Search Strategy</label>
             <div class="form__row">
-            <select v-model="searchStrategy" class="form__input menu__select">
-                <option value="BreadthFirstSearch">Breadth First Search</option>
-                <option value="UniformCostSearch">Uniform Cost Search</option>
-                <option value="DepthFirstSearch">Depth First Search</option>
-                <option value="DepthLimitedSearch">Depth Limited Search</option>
-            </select>
+                <select v-model="searchStrategy" @change="onChangeStrategy()" class="form__input menu__select">
+                    <option value="BreadthFirstSearch">Breadth First Search</option>
+                    <option value="UniformCostSearch">Uniform Cost Search</option>
+                    <option value="DepthFirstSearch">Depth First Search</option>
+                    <option value="DepthLimitedSearch">Depth Limited Search</option>
+                </select>
+            </div>
+            <div class="form__row" v-if="isLimit">
+                <label class="form__label form__label--small">Depth Limit</label>
+                <input type="number" class="form__input form__input--small" v-model="strategyOptions.depthLimit" placeholder="Depth Limit"
+                       step="1" min="1">
             </div>
             <div class="form__row">
                 <button class="form__input form__button" v-on:click="doSearch">Search</button>
@@ -20,18 +25,21 @@
             <h2 class="section__header">Map</h2>
             <div class="form__row">
                 <label class="form__label form__label--small">Columns</label>
-                <input type="number" class="form__input form__input--small" v-model="cols" placeholder="Columns (e.g. 10)" step="1" min="1" max="50">
+                <input type="number" class="form__input form__input--small" v-model="cols"
+                       placeholder="Columns (e.g. 10)" step="1" min="1" max="50">
             </div>
             <div class="form__row">
                 <label class="form__label form__label--small">Rows</label>
-                <input type="number" class="form__input form__input--small" v-model="rows" placeholder="Rows (e.g. 10)" step="1" min="1" max="50">
+                <input type="number" class="form__input form__input--small" v-model="rows" placeholder="Rows (e.g. 10)"
+                       step="1" min="1" max="50">
             </div>
             <div class="form__row">
                 <button class="form__input form__button" v-on:click="onChangeMap">Build Map</button>
             </div>
         </div>
         <div class="menu__section section">
-            <a href="https://github.com/marcbreitung/problem-search-explorer" class="link" target="_blank"><i class="fa fa-github fa-fw" aria-hidden="true"></i>Problem Search Explorer</a>
+            <a href="https://github.com/marcbreitung/problem-search-explorer" class="link" target="_blank"><i
+                    class="fa fa-github fa-fw" aria-hidden="true"></i>Problem Search Explorer</a>
         </div>
     </div>
 </template>
@@ -40,7 +48,11 @@
     let data = {
         searchStrategy: 'BreadthFirstSearch',
         cols: '10',
-        rows: '10'
+        rows: '10',
+        strategyOptions: {
+            depthLimit: '10'
+        },
+        isLimit: false
     }
     export default {
         name: 'SearchMenu',
@@ -48,6 +60,9 @@
             return data
         },
         methods: {
+            onChangeStrategy: function () {
+                this.isLimit = this.searchStrategy === 'DepthLimitedSearch'
+            },
             doSearch: function () {
                 this.$emit('updateSearch', data)
             },
@@ -63,10 +78,12 @@
         background: #6189A5;
         min-width: 250px;
     }
+
     .menu__section {
         padding: 1em;
         border-bottom: 1px solid #283144;
     }
+
     .menu__header {
         font-size: 1em;
         margin: 0;
@@ -76,6 +93,7 @@
         font-weight: bold;
         border-bottom: 1px solid #283144;
     }
+
     .section__header {
         font-size: 1em;
         margin: 0 0 .75em 0;
@@ -84,9 +102,11 @@
         text-transform: uppercase;
         font-weight: bold;
     }
+
     .form__row {
         margin-bottom: .5em;
     }
+
     .form__row:after {
         content: '';
         clear: both;
@@ -94,20 +114,23 @@
         visibility: hidden;
         height: 0;
     }
+
     .form__input {
-        width:100%;
+        width: 100%;
         appearance: none;
-        border:none;
+        border: none;
         border-radius: 0;
         font-size: 0.75em;
         padding: .6em .6em;
         background: #223143;
         color: #fff;
     }
+
     .form__input--small {
         width: 60%;
         float: right;
     }
+
     .form__label {
         font-size: 0.8em;
         line-height: 2em;
@@ -116,10 +139,12 @@
         display: block;
         margin-bottom: .5em;
     }
+
     .form__label--small {
         width: 30%;
         float: left;
     }
+
     .form__button {
         display: inline-block;
         width: auto;
@@ -128,6 +153,7 @@
         text-transform: uppercase;
         background: #E15130;
     }
+
     .link {
         color: #283144;
         font-size: 0.8em;

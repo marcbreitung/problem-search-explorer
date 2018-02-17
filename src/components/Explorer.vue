@@ -17,6 +17,11 @@
                 You must generate a map. Please click the "Build Map" button.
             </div>
         </modal>
+        <modal name="limit" height="auto">
+            <div class="modal">
+                Maximum depth limit reached.
+            </div>
+        </modal>
     </div>
 </template>
 
@@ -65,7 +70,7 @@
                     this.$modal.show('select')
                     return false
                 }
-                this.searchStrategy = this.searchStrategyFactory.getStrategy(value.searchStrategy)
+                this.searchStrategy = this.searchStrategyFactory.getStrategy(value.searchStrategy, value.strategyOptions)
                 graph = new ProblemSearch.Graph()
                 graph.addNodes(this.map.getNodes())
                 problem = new ProblemSearch.Problem(graph, this.start, this.goal)
@@ -75,6 +80,9 @@
                 } catch (e) {
                     if (e.name === 'NoSolutionException') {
                         this.$modal.show('solution')
+                    }
+                    if (e.name === 'LimitException') {
+                        this.$modal.show('limit')
                     }
                 }
             },
