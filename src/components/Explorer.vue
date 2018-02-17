@@ -139,6 +139,7 @@
     .modal {
         background: #6189A5;
         padding: 20px;
+        text-align: center;
     }
     
     @media (min-width: 769px) {
