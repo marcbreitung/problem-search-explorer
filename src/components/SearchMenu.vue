@@ -1,6 +1,8 @@
 <template>
     <div id="menu" class="menu">
+
         <h1 class="menu__header">Problem Search Explorer</h1>
+
         <div class="menu__section section">
             <h2 class="section__header">Search</h2>
             <label class="form__label">Search Strategy</label>
@@ -16,13 +18,27 @@
             </div>
             <div class="form__row" v-if="isLimit">
                 <label class="form__label form__label--small">Depth Limit</label>
-                <input type="number" class="form__input form__input--small" v-model="strategyOptions.limit" placeholder="Depth Limit"
+                <input type="number" class="form__input form__input--small" v-model="strategyOptions.limit"
+                       placeholder="Depth Limit"
                        step="1" min="1">
             </div>
             <div class="form__row">
                 <button class="form__input form__button" v-on:click="doSearch">Search</button>
             </div>
         </div>
+
+        <div class="menu__section section">
+            <h2 class="section__header">Statistics</h2>
+            <div class="form__row">
+                <span class="form__label form__label--small">Path Cost</span>
+                <div class="form__input form__input--small">{{ stats.cost }}</div>
+            </div>
+            <div class="form__row">
+                <span class="form__label form__label--small">Nodes</span>
+                <div class="form__input form__input--small">{{ stats.nodes }}</div>
+            </div>
+        </div>
+
         <div class="menu__section section">
             <h2 class="section__header">Map</h2>
             <div class="form__row">
@@ -43,6 +59,7 @@
             <a href="https://github.com/marcbreitung/problem-search-explorer" class="link" target="_blank"><i
                     class="fa fa-github fa-fw" aria-hidden="true"></i>Problem Search Explorer</a>
         </div>
+
     </div>
 </template>
 
@@ -54,14 +71,24 @@
         strategyOptions: {
             limit: '10'
         },
-        isLimit: false
+        isLimit: false,
+        stats: {
+            cost: 0,
+            nodes: 0
+        }
     }
     export default {
         name: 'SearchMenu',
         data: function () {
             return data
         },
+        created: function () {
+            this.$nextTick(this.initEvents)
+        },
         methods: {
+            initEvents: function () {
+                this.$eventHub.$on('statistic', this.addStatistic)
+            },
             onChangeStrategy: function () {
                 this.isLimit = this.searchStrategy === 'DepthLimitedSearch'
             },
@@ -70,6 +97,10 @@
             },
             onChangeMap: function () {
                 this.$emit('updateMap', data)
+            },
+            addStatistic: function (solution) {
+                this.stats.cost = solution.pop().pathCost
+                this.stats.nodes = solution.length
             }
         }
     }
@@ -185,13 +216,16 @@
             padding: 1em;
             font-size: 1em;
         }
+
         .section__header {
             margin: 0 0 .75em 0;
             font-size: 1em;
         }
+
         .menu__section {
             padding: 1em;
         }
+
         .form__row {
             margin-bottom: .5em;
         }

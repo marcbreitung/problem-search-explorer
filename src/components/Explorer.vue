@@ -77,6 +77,7 @@
                 try {
                     result = this.searchStrategy.search(problem)
                     this.$eventHub.$emit('solution', result.solutionGraph())
+                    this.$eventHub.$emit('statistic', result.solution())
                 } catch (e) {
                     if (e.name === 'NoSolutionException') {
                         this.$modal.show('solution')
