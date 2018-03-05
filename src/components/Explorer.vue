@@ -77,7 +77,11 @@
                 try {
                     result = this.searchStrategy.search(problem)
                     this.$eventHub.$emit('solution', result.solutionGraph())
-                    this.$eventHub.$emit('statistic', result.solution())
+                    this.$eventHub.$emit('statistic', {
+                        'cost': result.solution().pop().pathCost,
+                        'nodes': result.solution().length,
+                        'explored': this.searchStrategy.explored.length
+                    })
                 } catch (e) {
                     if (e.name === 'NoSolutionException') {
                         this.$modal.show('solution')
@@ -99,6 +103,11 @@
                 this.goal = null
                 this.mapHasNodes = true
                 this.$eventHub.$emit('nodes', this.map.getNodes())
+                this.$eventHub.$emit('statistic', {
+                    'cost': 0,
+                    'nodes': 0,
+                    'explored': 0
+                })
             },
             addNode: function (node) {
                 if (this.start === null && this.goal === null) {

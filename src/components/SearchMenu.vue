@@ -34,8 +34,12 @@
                 <div class="form__input form__input--small">{{ stats.cost }}</div>
             </div>
             <div class="form__row">
-                <span class="form__label form__label--small">Nodes</span>
+                <span class="form__label form__label--small">Path Nodes</span>
                 <div class="form__input form__input--small">{{ stats.nodes }}</div>
+            </div>
+            <div class="form__row">
+                <span class="form__label form__label--small">Explored</span>
+                <div class="form__input form__input--small">{{ stats.explored }}</div>
             </div>
         </div>
 
@@ -74,7 +78,8 @@
         isLimit: false,
         stats: {
             cost: 0,
-            nodes: 0
+            nodes: 0,
+            explored: 0
         }
     }
     export default {
@@ -99,8 +104,9 @@
                 this.$emit('updateMap', data)
             },
             addStatistic: function (solution) {
-                this.stats.cost = solution.pop().pathCost
-                this.stats.nodes = solution.length
+                this.stats.cost = (Math.round(solution.cost * 10000) / 10000).toFixed(4)
+                this.stats.nodes = solution.nodes
+                this.stats.explored = solution.explored
             }
         }
     }
@@ -158,10 +164,11 @@
         padding: .6em .6em;
         background: #223143;
         color: #fff;
+        overflow: hidden;
     }
 
     .form__input--small {
-        width: 60%;
+        width: 50%;
         float: right;
     }
 
@@ -175,7 +182,7 @@
     }
 
     .form__label--small {
-        width: 30%;
+        width: 40%;
         float: left;
     }
 
