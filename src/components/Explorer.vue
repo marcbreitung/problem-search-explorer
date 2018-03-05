@@ -73,7 +73,7 @@
                 this.searchStrategy = this.searchStrategyFactory.getStrategy(value.searchStrategy, value.strategyOptions)
                 graph = new ProblemSearch.Graph()
                 graph.addNodes(this.map.getNodes())
-                problem = new ProblemSearch.Problem(graph, this.start, this.goal)
+                problem = new ProblemSearch.Problem(graph, new ProblemSearch.State(this.start.id, this.start), new ProblemSearch.State(this.goal.id, this.goal))
                 try {
                     result = this.searchStrategy.search(problem)
                     this.$eventHub.$emit('solution', result.solutionGraph())
@@ -141,11 +141,11 @@
         padding: 20px;
         text-align: center;
     }
-    
+
     @media (min-width: 769px) {
         .explorer {
             flex-direction: row;
         }
     }
-    
+
 </style>
