@@ -40,6 +40,7 @@
         searchStrategy: null,
         mapHasNodes: false
     }
+
     export default {
         components: {SearchMap, SearchMenu},
         name: 'Explorer',
@@ -82,6 +83,7 @@
                         'nodes': result.solution().length,
                         'explored': this.searchStrategy.explored.length
                     })
+                    this.$eventHub.$emit('explored', this.searchStrategy.explored.map((node) => node.state.node))
                 } catch (e) {
                     if (e.name === 'NoSolutionException') {
                         this.$modal.show('solution')

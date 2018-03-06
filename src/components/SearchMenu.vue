@@ -1,7 +1,12 @@
 <template>
-    <div id="menu" class="menu">
+    <div id="menu" class="menu" v-bind:class="{ 'menu--closed': isClosed }">
 
-        <h1 class="menu__header">Problem Search Explorer</h1>
+        <h1 class="menu__header">Problem Search Explorer
+            <a href="#" id="openMenu" v-on:click="isClosed = !isClosed">
+                <i class="fa fa-bars" aria-hidden="true" v-if="isClosed"></i>
+                <i class="fa fa-times" aria-hidden="true" v-else></i>
+            </a>
+        </h1>
 
         <div class="menu__section section">
             <h2 class="section__header">Search</h2>
@@ -42,7 +47,16 @@
                 <div class="form__input form__input--small">{{ stats.explored }}</div>
             </div>
         </div>
-
+        <div class="menu__section section">
+            <h2 class="section__header">Settings</h2>
+            <div class="form__row">
+                <span class="form__label">
+                    <input id="showExplored" type="checkbox" class="checkbox" v-model="showExplored"
+                           @change="onToggleExplored()">
+                    <label class="checkbox-label" for="showExplored">Show Explored</label>
+                </span>
+            </div>
+        </div>
         <div class="menu__section section">
             <h2 class="section__header">Map</h2>
             <div class="form__row">
@@ -76,12 +90,15 @@
             limit: '10'
         },
         isLimit: false,
+        showExplored: false,
         stats: {
             cost: 0,
             nodes: 0,
             explored: 0
-        }
+        },
+        isClosed: false
     }
+
     export default {
         name: 'SearchMenu',
         data: function () {
@@ -103,6 +120,9 @@
             onChangeMap: function () {
                 this.$emit('updateMap', data)
             },
+            onToggleExplored: function () {
+                this.$eventHub.$emit('toggleExplored', this.showExplored)
+            },
             addStatistic: function (solution) {
                 this.stats.cost = (Math.round(solution.cost * 10000) / 10000).toFixed(4)
                 this.stats.nodes = solution.nodes
@@ -113,9 +133,31 @@
 </script>
 
 <style scoped>
+
+    #openMenu {
+        display: block;
+        float: right;
+        cursor: pointer;
+        background: #6189A5;
+        width: 25px;
+        text-align: center;
+        color: #fff;
+        height: 25px;
+        line-height: 25px;
+        position: absolute;
+        top: -25px;
+    }
+
     .menu {
         background: #6189A5;
-        min-width: 250px;
+        min-width: 255px;
+        position: absolute;
+        width: 100%;
+        transition: all .25s ease-in-out;
+    }
+
+    .menu--closed {
+        transform: translate(0, 100%);
     }
 
     .menu__section {
@@ -172,6 +214,56 @@
         float: right;
     }
 
+    .checkbox {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border: none;
+        border-radius: 0;
+        font-size: 1em;
+        width: 100%;
+    }
+
+    .checkbox:checked,
+    .checkbox:not(:checked) {
+        background: transparent;
+        position: absolute;
+        visibility: hidden;
+        margin: 0;
+        padding: 0;
+    }
+
+    .checkbox + label {
+        cursor: pointer;
+    }
+
+    .checkbox:checked + label::before,
+    .checkbox:not(:checked) + label::before {
+        content: '\f00c';
+        font-family: FontAwesome;
+        color: #6189A5;
+        display: inline-block;
+        width: 17px;
+        height: 17px;
+        line-height: 17px;
+        text-align: center;
+        position: relative;
+        top: 0;
+        background: #6189A5;
+        margin-right: 1em;
+        border: 1px solid #283144;
+    }
+
+    .checkbox:hover + label::before {
+        color: rgba(255, 255, 255, .2);
+        background: rgba(40, 49, 68, .2);
+    }
+
+    .checkbox:checked + label::before {
+        color: #ffffff;
+        background: #283144;
+    }
+
     .form__label {
         font-size: 0.8em;
         line-height: 2em;
@@ -219,18 +311,32 @@
     }
 
     @media (min-width: 769px) {
+
+        #openMenu {
+            display: none;
+        }
+
+        .menu--closed {
+            transform: translate(0, 0);
+        }
+
+        .menu {
+            position: relative;
+            width: auto;
+        }
+
         .menu__header {
             padding: 1em;
-            font-size: 1em;
+            font-size: .9em;
         }
 
         .section__header {
-            margin: 0 0 .75em 0;
-            font-size: 1em;
+            margin: 0 0 .5em 0;
+            font-size: .9em;
         }
 
         .menu__section {
-            padding: 1em;
+            padding: .75em 1em;
         }
 
         .form__row {

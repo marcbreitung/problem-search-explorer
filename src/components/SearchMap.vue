@@ -9,8 +9,11 @@
     let data = {
         map: null,
         canvas: null,
-        visualisation: null
+        visualisation: null,
+        showExplored: false,
+        explored: null
     }
+
     export default {
         name: 'SearchMap',
         data: function () {
@@ -42,13 +45,25 @@
                 this.$eventHub.$on('start', this.addStart)
                 this.$eventHub.$on('goal', this.addGoal)
                 this.$eventHub.$on('solution', this.addSolution)
+                this.$eventHub.$on('explored', this.addExplored)
+                this.$eventHub.$on('toggleExplored', this.onToggleExplored)
+            },
+            onToggleExplored: function (value) {
+                this.showExplored = value
+                this.visualisation.removeLayerByName('exploredLayer')
+                this.visualisation.update()
+                if (this.showExplored && this.explored) {
+                    this.addExplored(this.explored)
+                }
             },
             addNodes: function (nodes) {
+                this.explored = null
                 this.visualisation.resize({'height': this.map.offsetHeight, 'width': this.map.offsetWidth})
-                this.visualisation.removeLayerByName('startLayer')
-                this.visualisation.removeLayerByName('goalLayer')
                 this.visualisation.removeLayerByName('baseLayer')
                 this.visualisation.removeLayerByName('solutionLayer')
+                this.visualisation.removeLayerByName('exploredLayer')
+                this.visualisation.removeLayerByName('startLayer')
+                this.visualisation.removeLayerByName('goalLayer')
                 let baseLayer = new ProblemGraphVisualisation.Layer('baseLayer', {
                     'type': 'node',
                     'sorting': 0,
@@ -61,12 +76,32 @@
                 this.visualisation.addLayer(baseLayer)
                 this.visualisation.update()
             },
+            addExplored: function (nodes) {
+                this.explored = nodes
+                if (this.showExplored) {
+                    let solutionLayer = new ProblemGraphVisualisation.Layer('exploredLayer', {
+                        'type': 'text',
+                        'sorting': 1,
+                        'nodes': nodes,
+                        'nodeColor': '#e34f00',
+                        'lineColor': '#e34f00',
+                        'textColor': '#e34f00',
+                        'lineSize': 1,
+                        'nodeSize': 5
+                    })
+                    this.visualisation.addLayer(solutionLayer)
+                    this.visualisation.update()
+                } else {
+                    this.visualisation.removeLayerByName('exploredLayer')
+                    this.visualisation.update()
+                }
+            },
             addStart: function (node) {
                 this.resetSolution()
                 node.label = 'A'
                 let startLayer = new ProblemGraphVisualisation.Layer('startLayer', {
                     'type': 'text',
-                    'sorting': 3,
+                    'sorting': 4,
                     'nodes': [node],
                     'nodeColor': '#507b0f',
                     'lineColor': '#000000',
@@ -81,7 +116,7 @@
                 node.label = 'B'
                 let goalLayer = new ProblemGraphVisualisation.Layer('goalLayer', {
                     'type': 'text',
-                    'sorting': 4,
+                    'sorting': 5,
                     'nodes': [node],
                     'nodeColor': '#e34f00',
                     'lineColor': '#000000',
@@ -106,9 +141,11 @@
                 this.visualisation.update()
             },
             resetSolution: function () {
+                this.explored = null
+                this.visualisation.removeLayerByName('solutionLayer')
+                this.visualisation.removeLayerByName('exploredLayer')
                 this.visualisation.removeLayerByName('startLayer')
                 this.visualisation.removeLayerByName('goalLayer')
-                this.visualisation.removeLayerByName('solutionLayer')
                 this.visualisation.update()
             }
         }
