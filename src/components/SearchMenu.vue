@@ -14,10 +14,15 @@
             <div class="form__row">
                 <div class="select__icon">
                     <select v-model="searchStrategy" @change="onChangeStrategy()" class="form__input menu__select">
-                        <option value="BreadthFirstSearch">Breadth First Search</option>
-                        <option value="UniformCostSearch">Uniform Cost Search</option>
-                        <option value="DepthFirstSearch">Depth First Search</option>
-                        <option value="DepthLimitedSearch">Depth Limited Search</option>
+                        <optgroup label="Uninformed Search">
+                            <option value="BreadthFirstSearch">Breadth First Search</option>
+                            <option value="UniformCostSearch">Uniform Cost Search</option>
+                            <option value="DepthFirstSearch">Depth First Search</option>
+                            <option value="DepthLimitedSearch">Depth Limited Search</option>
+                        </optgroup>
+                        <optgroup label="Informed Search">
+                            <option value="GreedyBestFirstSearch">Greedy Best First Search</option>
+                        </optgroup>
                     </select>
                 </div>
             </div>
