@@ -143,7 +143,7 @@
         display: block;
         float: right;
         cursor: pointer;
-        background: #6189A5;
+        background: #313740;
         width: 25px;
         text-align: center;
         color: #fff;
@@ -154,11 +154,12 @@
     }
 
     .menu {
-        background: #6189A5;
+        background: #313740;
         min-width: 255px;
         position: absolute;
         width: 100%;
         transition: all .25s ease-in-out;
+        box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.15);
     }
 
     .menu--closed {
@@ -167,24 +168,24 @@
 
     .menu__section {
         padding: .5em;
-        border-bottom: 1px solid #283144;
+        border-bottom: 1px solid #656A73;
     }
 
     .menu__header {
-        font-size: .8em;
+        font-size: .7em;
         margin: 0;
         padding: .5em;
-        color: #223143;
+        color: #D9CFC7;
         text-transform: uppercase;
         font-weight: bold;
-        border-bottom: 1px solid #283144;
+        border-bottom: 1px solid #656A73;
     }
 
     .section__header {
         font-size: .8em;
         margin: 0;
         padding: 0;
-        color: #223143;
+        color: #D9CFC7;
         text-transform: uppercase;
         font-weight: bold;
     }
@@ -208,8 +209,8 @@
         border: none;
         border-radius: 0;
         font-size: 0.75em;
-        padding: .6em .6em;
-        background: #223143;
+        padding: .5em;
+        background: #656A73;
         color: #fff;
         overflow: hidden;
     }
@@ -246,7 +247,7 @@
     .checkbox:not(:checked) + label::before {
         content: '\f00c';
         font-family: FontAwesome;
-        color: #6189A5;
+        color: #656A73;
         display: inline-block;
         width: 17px;
         height: 17px;
@@ -254,26 +255,23 @@
         text-align: center;
         position: relative;
         top: 0;
-        background: #6189A5;
+        background: #656A73;
         margin-right: 1em;
-        border: 1px solid #283144;
     }
 
     .checkbox:hover + label::before {
-        color: rgba(255, 255, 255, .2);
-        background: rgba(40, 49, 68, .2);
+        color: rgba(255, 255, 255, .1);
     }
 
     .checkbox:checked + label::before {
-        color: #ffffff;
-        background: #283144;
+        color: #D9CFC7;
     }
 
     .form__label {
-        font-size: 0.8em;
+        font-size: 0.7em;
         line-height: 2em;
-        color: #223143;
-        font-weight: bold;
+        color: #D9CFC7;
+        font-weight: normal;
         display: block;
         margin-bottom: .5em;
     }
@@ -285,15 +283,16 @@
 
     .form__button {
         display: inline-block;
-        width: auto;
         float: right;
         cursor: pointer;
-        text-transform: uppercase;
         background: #E15130;
+        font-size: 0.7em;
+        padding: 6px 29px;
+        width: 50%;
     }
 
     .link {
-        color: #283144;
+        color: #D9CFC7;
         font-size: 0.8em;
         text-decoration: none;
     }
@@ -310,7 +309,7 @@
         top: 0;
         right: 0;
         pointer-events: none;
-        color: #fff;
+        color: #D9CFC7;
         text-align: center;
         line-height: 1.9em;
     }
@@ -328,16 +327,15 @@
         .menu {
             position: relative;
             width: auto;
+            margin: 10px;
         }
 
         .menu__header {
             padding: 1em;
-            font-size: .9em;
         }
 
         .section__header {
             margin: 0 0 .5em 0;
-            font-size: .9em;
         }
 
         .menu__section {

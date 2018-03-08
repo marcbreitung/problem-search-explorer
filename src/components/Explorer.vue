@@ -146,6 +146,7 @@
         align-items: stretch;
         width: 100vw;
         height: 100vh;
+        overflow: hidden;
         flex-direction: column-reverse;
     }
 

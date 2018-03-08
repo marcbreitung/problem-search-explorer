@@ -34,7 +34,7 @@
                     'element': this.canvas,
                     'height': this.map.offsetHeight,
                     'width': this.map.offsetWidth,
-                    'background': '#223143'
+                    'background': '#D9CFC7'
                 })
                 this.visualisation.rendererFactory.registerRenderer('node', ProblemGraphVisualisation.NodesRenderer)
                 this.visualisation.rendererFactory.registerRenderer('text', ProblemGraphVisualisation.TextRenderer)
@@ -68,9 +68,10 @@
                     'type': 'node',
                     'sorting': 0,
                     'nodes': nodes,
-                    'nodeColor': '#6189A5',
-                    'lineColor': '#6189A5',
-                    'textColor': '#e34f00',
+                    'nodeColor': '#656A73',
+                    'lineColor': '#656A73',
+                    'textColor': '#656A73',
+                    'lineSize': 1,
                     'nodeSize': 5
                 })
                 this.visualisation.addLayer(baseLayer)
@@ -83,11 +84,11 @@
                         'type': 'text',
                         'sorting': 1,
                         'nodes': nodes,
-                        'nodeColor': '#e34f00',
-                        'lineColor': '#e34f00',
-                        'textColor': '#e34f00',
+                        'nodeColor': '#e7e7e7',
+                        'lineColor': '#e7e7e7',
+                        'textColor': '#e7e7e7',
                         'lineSize': 1,
-                        'nodeSize': 5
+                        'nodeSize': 3
                     })
                     this.visualisation.addLayer(solutionLayer)
                     this.visualisation.update()
@@ -132,10 +133,10 @@
                     'type': 'solution',
                     'sorting': 2,
                     'nodes': nodes,
-                    'nodeColor': '#e7e7e7',
-                    'lineColor': '#e7e7e7',
-                    'textColor': '#e7e7e7',
-                    'lineSize': 2
+                    'nodeColor': '#e34f00',
+                    'lineColor': '#e34f00',
+                    'textColor': '#e34f00',
+                    'lineSize': 3
                 })
                 this.visualisation.addLayer(solutionLayer)
                 this.visualisation.update()

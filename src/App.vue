@@ -20,6 +20,6 @@
         font-family: 'Roboto', sans-serif;
     }
     #app {
-        background: #223143;
+        background: #D9CFC7;
     }
 </style>
