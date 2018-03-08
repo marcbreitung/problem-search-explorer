@@ -23,6 +23,7 @@
                         </optgroup>
                         <optgroup label="Informed Search">
                             <option value="GreedyBestFirstSearch">Greedy Best First Search</option>
+                            <option value="AStarSearch">A* Search</option>
                         </optgroup>
                     </select>
                 </div>
@@ -131,7 +132,7 @@
                 this.$eventHub.$emit('toggleExplored', this.showExplored)
             },
             addStatistic: function (solution) {
-                this.stats.cost = (Math.round(solution.cost * 10000) / 10000).toFixed(4)
+                this.stats.cost = Math.round(solution.cost)
                 this.stats.nodes = solution.nodes
                 this.stats.explored = solution.explored
             }

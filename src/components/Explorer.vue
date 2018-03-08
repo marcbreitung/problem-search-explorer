@@ -59,6 +59,7 @@
                 this.searchStrategyFactory.registerStrategy('DepthFirstSearch', ProblemSearch.DepthFirstSearch)
                 this.searchStrategyFactory.registerStrategy('DepthLimitedSearch', ProblemSearch.DepthLimitedSearch)
                 this.searchStrategyFactory.registerStrategy('GreedyBestFirstSearch', ProblemSearch.GreedyBestFirstSearch)
+                this.searchStrategyFactory.registerStrategy('AStarSearch', ProblemSearch.AStarSearch)
                 this.$eventHub.$on('click-canvas', this.findNode)
                 this.map = new ProblemMapGenerator.Map({})
             },

@@ -39,6 +39,7 @@
                 this.visualisation.rendererFactory.registerRenderer('node', ProblemGraphVisualisation.NodesRenderer)
                 this.visualisation.rendererFactory.registerRenderer('text', ProblemGraphVisualisation.TextRenderer)
                 this.visualisation.rendererFactory.registerRenderer('solution', ProblemGraphVisualisation.SolutionRenderer)
+                this.visualisation.rendererFactory.registerRenderer('highlight-node', ProblemGraphVisualisation.HighlightNodeRenderer)
             },
             initEvents: function () {
                 this.$eventHub.$on('nodes', this.addNodes)
@@ -80,17 +81,14 @@
             addExplored: function (nodes) {
                 this.explored = nodes
                 if (this.showExplored) {
-                    let solutionLayer = new ProblemGraphVisualisation.Layer('exploredLayer', {
-                        'type': 'text',
+                    let exploredLayer = new ProblemGraphVisualisation.Layer('exploredLayer', {
+                        'type': 'highlight-node',
                         'sorting': 1,
                         'nodes': nodes,
                         'nodeColor': '#e7e7e7',
-                        'lineColor': '#e7e7e7',
-                        'textColor': '#e7e7e7',
-                        'lineSize': 1,
                         'nodeSize': 3
                     })
-                    this.visualisation.addLayer(solutionLayer)
+                    this.visualisation.addLayer(exploredLayer)
                     this.visualisation.update()
                 } else {
                     this.visualisation.removeLayerByName('exploredLayer')
