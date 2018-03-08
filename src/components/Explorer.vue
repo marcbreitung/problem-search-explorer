@@ -151,7 +151,8 @@
     }
 
     .modal {
-        background: #6189A5;
+        background: #E15130;
+        color: #fff;
         padding: 20px;
         text-align: center;
     }

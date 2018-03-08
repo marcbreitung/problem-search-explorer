@@ -13,6 +13,7 @@
             <label class="form__label">Search Strategy</label>
             <div class="form__row">
                 <div class="select__icon">
+                    <i class="fas fa-angle-down"></i>
                     <select v-model="searchStrategy" @change="onChangeStrategy()" class="form__input menu__select">
                         <optgroup label="Uninformed Search">
                             <option value="BreadthFirstSearch">Breadth First Search</option>
@@ -41,15 +42,15 @@
             <h2 class="section__header">Statistics</h2>
             <div class="form__row">
                 <span class="form__label form__label--small">Path Cost</span>
-                <div class="form__input form__input--small">{{ stats.cost }}</div>
+                <div class="form__input form__input--small form__input--inactive">{{ stats.cost }}</div>
             </div>
             <div class="form__row">
                 <span class="form__label form__label--small">Path Nodes</span>
-                <div class="form__input form__input--small">{{ stats.nodes }}</div>
+                <div class="form__input form__input--small form__input--inactive">{{ stats.nodes }}</div>
             </div>
             <div class="form__row">
                 <span class="form__label form__label--small">Explored</span>
-                <div class="form__input form__input--small">{{ stats.explored }}</div>
+                <div class="form__input form__input--small form__input--inactive">{{ stats.explored }}</div>
             </div>
         </div>
         <div class="menu__section section">
@@ -79,8 +80,9 @@
             </div>
         </div>
         <div class="menu__section section">
-            <a href="https://github.com/marcbreitung/problem-search-explorer" class="link" target="_blank"><i
-                    class="fa fa-github fa-fw" aria-hidden="true"></i>Problem Search Explorer</a>
+            <a href="https://github.com/marcbreitung/problem-search-explorer" class="link" target="_blank">
+                <i class="fab fa-github"></i> Problem Search Explorer
+            </a>
         </div>
 
     </div>
@@ -220,6 +222,12 @@
         float: right;
     }
 
+    .form__input--inactive {
+        background: none;
+        border: 1px solid rgba(101, 106, 115, 0.25);
+        color: #D9CFC7;
+    }
+
     .checkbox {
         -webkit-appearance: none;
         -moz-appearance: none;
@@ -245,26 +253,21 @@
 
     .checkbox:checked + label::before,
     .checkbox:not(:checked) + label::before {
-        content: '\f00c';
-        font-family: FontAwesome;
+        content: ' ';
         color: #656A73;
         display: inline-block;
-        width: 17px;
-        height: 17px;
-        line-height: 17px;
+        width: 10px;
+        height: 10px;
         text-align: center;
         position: relative;
-        top: 0;
+        top: 3px;
         background: #656A73;
         margin-right: 1em;
-    }
-
-    .checkbox:hover + label::before {
-        color: rgba(255, 255, 255, .1);
+        border: 3px solid #656A73;
     }
 
     .checkbox:checked + label::before {
-        color: #D9CFC7;
+        background: #ffffff;
     }
 
     .form__label {
@@ -293,25 +296,19 @@
 
     .link {
         color: #D9CFC7;
-        font-size: 0.8em;
+        font-size: 0.7em;
         text-decoration: none;
     }
 
-    .select__icon::after {
-        font-family: FontAwesome;
-        font-style: normal;
-        font-weight: normal;
-        content: '\F0D7';
+    .select__icon  svg {
         display: block;
-        width: 1.9em;
-        height: 1.9em;
+        width: 1em;
+        height: 1em;
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 6px;
+        right: 5px;
         pointer-events: none;
         color: #D9CFC7;
-        text-align: center;
-        line-height: 1.9em;
     }
 
     @media (min-width: 769px) {
@@ -328,6 +325,7 @@
             position: relative;
             width: auto;
             margin: 10px;
+            overflow: auto;
         }
 
         .menu__header {
