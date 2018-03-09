@@ -20,8 +20,8 @@
             return data
         },
         created: function () {
-            this.$nextTick(this.initEvents)
             this.$nextTick(this.init)
+            this.$nextTick(this.initEvents)
         },
         methods: {
             init: function () {

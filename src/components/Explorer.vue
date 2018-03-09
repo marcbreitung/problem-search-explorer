@@ -28,6 +28,7 @@
 <script>
     import SearchMenu from './SearchMenu.vue'
     import SearchMap from './SearchMap.vue'
+
     let ProblemMapGenerator = require('problem-map-generator')
     let ProblemSearch = require('problem-search')
     let data = {
@@ -61,6 +62,7 @@
                 this.searchStrategyFactory.registerStrategy('AStarSearch', ProblemSearch.AStarSearch)
                 this.$eventHub.$on('click-canvas', this.findNode)
                 this.map = new ProblemMapGenerator.Map({})
+                this.map.injectRandom(ProblemMapGenerator.Random)
             },
             updateSearch: function (value) {
                 let graph, problem, result
@@ -101,7 +103,6 @@
                     'width': this.mapElement.offsetWidth,
                     'height': this.mapElement.offsetHeight
                 })
-                this.map.injectRandom(ProblemMapGenerator.Random)
                 this.start = null
                 this.goal = null
                 this.mapHasNodes = true

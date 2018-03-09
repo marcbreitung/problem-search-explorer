@@ -301,7 +301,7 @@
         text-decoration: none;
     }
 
-    .select__icon  svg {
+    .select__icon svg {
         display: block;
         width: 1em;
         height: 1em;
