@@ -28,9 +28,8 @@
 <script>
     import SearchMenu from './SearchMenu.vue'
     import SearchMap from './SearchMap.vue'
-
-    let ProblemMapGenerator = require('./../../node_modules/problem-map-generator/dist/problem-map-generator.node.min')
-    let ProblemSearch = require('./../../node_modules/problem-search/dist/problem-search.node.min')
+    let ProblemMapGenerator = require('problem-map-generator')
+    let ProblemSearch = require('problem-search')
     let data = {
         start: null,
         goal: null,

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    let ProblemGraphVisualisation = require('./../../node_modules/problem-graph-visualisation/dist/problem-graph-visualisation.node.min')
+    let ProblemGraphVisualisation = require('problem-graph-visualisation')
     let data = {
         map: null,
         canvas: null,
